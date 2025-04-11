@@ -19,12 +19,13 @@ export const handleError = (
     c: Context,
     message = "Something went wrong",
     statusCode: StatusCode = 500,
-    errors: Record<string, string[]> | null = null
+    errors: Record<string, string[]> | string | null = null
 ) => {
     c.status(statusCode);
     return c.json({
-        status: "error",
+        status: "failed",
         message,
+        data: null,
         errors: errors,
     });
 };
