@@ -1,22 +1,23 @@
 import { validator } from "@/shared/middlewares/validator.middleware";
 import { Hono } from "hono";
 import { bookValidation } from "./book.validation";
-import { createBookController } from "./book.controller";
+import { BookController } from "./book.controller";
 
 const bookRoutes = new Hono();
+const bookController = new BookController();
 
-bookRoutes.post("/", validator(bookValidation), createBookController);
+bookRoutes.post("/", validator(bookValidation), bookController.create);
 
-bookRoutes.get("/", (c) => {
-    return c.json("get books");
-});
+bookRoutes.get("/", bookController.findAll);
 
-bookRoutes.put("/", (c) => {
-    return c.json("put books");
-});
+bookRoutes.get("/:slug", bookController.findBySlug);
 
-bookRoutes.delete("/", (c) => {
-    return c.json("delete books");
-});
+bookRoutes.put(
+    "/:id",
+    validator(bookValidation.partial()),
+    bookController.update
+);
+
+bookRoutes.delete("/:id", bookController.delete);
 
 export default bookRoutes;
