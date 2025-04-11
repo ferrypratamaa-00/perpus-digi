@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer, timestamp } from "drizzle-orm/pg-core";
 
 export const books = pgTable("books", {
     id: serial("id").primaryKey(),
@@ -12,4 +12,6 @@ export const books = pgTable("books", {
     year: integer("year").notNull(),
     price: integer("price").notNull(),
     description: text("description").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
