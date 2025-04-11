@@ -1,4 +1,4 @@
-import { AppError } from "@/core/errors/appError.errpr";
+import { AppError } from "@/core/errors/appError.error";
 import { Context } from "hono";
 import { handleError } from "../utils/response.util";
 
