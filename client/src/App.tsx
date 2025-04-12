@@ -1,30 +1,19 @@
-import { Outlet } from "react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "react-router";
+import routes from "./routes/routes.tsx";
+
+const queryClient = new QueryClient();
+
+const router = routes;
 
 function App() {
     return (
         <>
-            <div className="h1">is coming..</div>
-            <Outlet />
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
         </>
     );
 }
 
 export default App;
-
-function Home() {
-    return (
-        <>
-            <div className="h1">Home..</div>
-        </>
-    );
-}
-
-function About() {
-    return (
-        <>
-            <div className="h1">About..</div>
-        </>
-    );
-}
-
-export { Home, About };
