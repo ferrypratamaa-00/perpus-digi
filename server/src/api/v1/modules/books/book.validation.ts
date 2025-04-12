@@ -55,11 +55,24 @@ export const bookValidation = z.object({
         .regex(/^\d{4}$/, "Year must be a 4-digit number"),
 
     price: z
-        .number({
-            required_error: "Price is required",
-            invalid_type_error: "Price must be a number",
-        })
-        .nonnegative("Price cannot be negative"),
+        .union([
+            z
+                .string()
+                .regex(
+                    /^\d+(\.\d{1,2})?$/,
+                    "Price must be a valid number with up to 2 decimal places"
+                ),
+            z.number(),
+        ])
+        .transform((val) => (typeof val === "string" ? parseFloat(val) : val))
+        .optional(),
+
+    // price: z
+    //     .number({
+    //         required_error: "Price is required",
+    //         invalid_type_error: "Price must be a number",
+    //     })
+    //     .nonnegative("Price cannot be negative"),
 
     description: z
         .string({
