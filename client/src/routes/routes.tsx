@@ -43,11 +43,11 @@ const routes = createBrowserRouter([
                                 Component: BookCreate,
                             },
                             {
-                                path: "edit",
+                                path: "edit/:slug",
                                 Component: BookEdit,
                             },
                             {
-                                path: "detail",
+                                path: "detail/:slug",
                                 Component: BookDetail,
                             },
                         ],

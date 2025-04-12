@@ -5,6 +5,7 @@ import { useCreateBook } from "../book.service";
 import { Book, BookSchema } from "../book.schema";
 import FormInput from "../components/FormInput/FormInput";
 import FormTextArea from "../components/FormTextArea/FormTextArea";
+import { toast } from "react-toastify";
 
 const BookCreate = () => {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ const BookCreate = () => {
     const onSubmit = (data: Book) => {
         mutate(data, {
             onSuccess: () => {
+                toast.success("Book created successfully!");
                 navigate("/admin/books");
             },
         });
@@ -83,7 +85,7 @@ const BookCreate = () => {
                     <FormInput
                         label="Price"
                         name="price"
-                        type="number"
+                        type="text"
                         register={register}
                         errors={errors}
                     />
