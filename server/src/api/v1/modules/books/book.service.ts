@@ -14,10 +14,15 @@ export class BookService {
     }
 
     async createBook(data: CreateBookDto) {
+        if (data.price === undefined) {
+            throw new Error("Price is required");
+        }
+
         const bookData: InsertBook = {
             id: randomUUID(),
             slug: generateSlug(data.title),
             ...data,
+            price: parseFloat(data.price.toString()),
         };
 
         return this.bookRepo.create(bookData);
@@ -40,7 +45,16 @@ export class BookService {
 
     async updateBook(id: string, data: Partial<UpdateBookDto>) {
         this.idChecking(id);
-        return this.bookRepo.update(id, data);
+
+        const updatedData: Partial<UpdateBookDto & { price?: number }> = {
+            ...data,
+            price:
+                data.price !== undefined
+                    ? parseFloat(data.price.toString())
+                    : undefined,
+        };
+
+        return this.bookRepo.update(id, updatedData);
     }
 
     async deleteBook(id: string) {
