@@ -25,8 +25,8 @@ export default function DashboardLayout() {
                 <footer className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
                     <aside>
                         <p>
-                            Copyright © {new Date().getFullYear()} - All right
-                            reserved by ACME Industries Ltd
+                            Copyright © {new Date().getFullYear()} - Created for
+                            testing purposes
                         </p>
                     </aside>
                 </footer>
@@ -39,7 +39,9 @@ export default function DashboardLayout() {
                 ></label>
                 <div className="flex flex-col w-full">
                     <div className="card rounded-none grid min-h-16 place-items-center">
-                        <h1 className="text-2xl font-bold">Perpus Digi</h1>
+                        <Link to={"/"} className="text-2xl font-bold">
+                            Perpus Digi
+                        </Link>
                     </div>
                 </div>
                 <div className="divider"></div>

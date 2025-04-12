@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import { useState } from "react";
 import { Pagination } from "../../../../components/Pagination/Pagination";
 import { Search } from "../../../../components/Search/Search";
 import BookTable from "./../components/Table/Table";
@@ -6,7 +7,11 @@ import { useBooks, useDeleteBook } from "../book.service";
 import { toast } from "react-toastify";
 
 const BookShow = () => {
-    const { data, isLoading } = useBooks();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search") ?? "";
+    const [query, setQuery] = useState(search);
+
+    const { data, isLoading } = useBooks(search);
     const {
         data: books = [],
         meta = { total: "0", page: 1, limit: 10, totalPages: 1 },
@@ -14,7 +19,7 @@ const BookShow = () => {
 
     const { mutate: deleteBook, status } = useDeleteBook();
 
-    if (isLoading) return <p className="text-center">Loading...</p>;
+    if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
     const handleDelete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this book?")) {
@@ -24,6 +29,11 @@ const BookShow = () => {
                 },
             });
         }
+    };
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        setSearchParams({ search: query });
     };
 
     return (
@@ -41,12 +51,16 @@ const BookShow = () => {
                     </Link>
                 </div>
                 <div id="search">
-                    <Search title="" />
+                    <Search
+                        value={query}
+                        onChange={setQuery}
+                        onSubmit={handleSearch}
+                    />
                 </div>
             </div>
             <div className="mb-4">
                 <BookTable
-                    books={books ?? []}
+                    books={books}
                     onDelete={handleDelete}
                     isDeleting={status === "pending"}
                 />

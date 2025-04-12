@@ -8,11 +8,13 @@ import BookCreate from "../features/admin/books/pages/Create";
 import BookEdit from "../features/admin/books/pages/Edit";
 import BookDetail from "../features/admin/books/pages/Detail";
 import BookShow from "../features/admin/books/pages/Show";
+import NotFound from "../components/NotFound/NotFound";
 
 const routes = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
+        errorElement: <NotFound />,
         children: [
             //User Routing
             { index: true, Component: Home },

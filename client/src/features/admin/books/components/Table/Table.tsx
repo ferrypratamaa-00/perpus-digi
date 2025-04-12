@@ -32,7 +32,6 @@ function THead() {
 }
 
 function TBody({ books, onDelete, isDeleting }: BookProps) {
-    console.log({ books });
     return (
         <tbody>
             {books.map((book, idx) => (

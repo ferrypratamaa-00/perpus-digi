@@ -1,8 +1,6 @@
 import { SearchProps } from "./Search.types";
 
-export const Search = (title: SearchProps) => {
-    console.log(title);
-
+export const Search = ({ value, onChange, onSubmit }: SearchProps) => {
     return (
         <div className="join">
             <div>
@@ -27,12 +25,16 @@ export const Search = (title: SearchProps) => {
                     <input
                         type="search"
                         placeholder="Enter book title"
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        className="input"
                         required
                     />
                 </label>
-                <div className="validator-hint hidden">Enter book title</div>
             </div>
-            <button className="btn btn-neutral join-item">Search</button>
+            <button className="btn btn-neutral join-item" onClick={onSubmit}>
+                Search
+            </button>
         </div>
     );
 };

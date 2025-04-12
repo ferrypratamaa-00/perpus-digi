@@ -3,10 +3,14 @@ import { BookResponse } from "./book.types";
 import { api } from "../../../lib/axios";
 import { Book } from "./book.schema";
 
-export const getBooks = async (search = ""): Promise<BookResponse> => {
+export const getBooks = async (
+    search = "",
+    page = 1
+): Promise<BookResponse> => {
     const res = await api.get("/books", {
         params: {
             ...(search && { search }),
+            page,
         },
     });
     const { data, meta } = res.data.data;
@@ -19,10 +23,10 @@ export const getBooks = async (search = ""): Promise<BookResponse> => {
     };
 };
 
-export const useBooks = (search = "") =>
+export const useBooks = (search = "", page = 1) =>
     useQuery({
-        queryKey: ["books", search],
-        queryFn: () => getBooks(search),
+        queryKey: ["books", search, page],
+        queryFn: () => getBooks(search, page),
     });
 
 export const useCreateBook = () => {
